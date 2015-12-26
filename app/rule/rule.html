@@ -1,0 +1,70 @@
+<section class="menu-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="navbar-collapse collapse ">
+                    <ul id="menu-top" class="nav navbar-nav navbar-right">
+                        <li><a href="#/dashboard">Dashboard</a></li>
+                        <li><a href="#/status/{{idtaman}}">Status</a></li>
+                        <li><a class="menu-top-active" href="#/rule/{{idtaman}}">Aturan Penyiraman</a></li>
+                        <li><a href="#/config/{{idtaman}}">Konfigurasi Sistem</a></li>
+                        <li><a href="#/history/{{idtaman}}">Log Taman</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="content-wrapper">
+    <div class="container" ng-repeat="galileo in galileos">
+        <div class="row">
+            <div class="col-md-12">
+                <h4 class="page-head-line">{{galileo.$id}}</h4>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <p>Mode penyiraman : {{galileo.mode}}</p>
+                        <button class="btn-primary" ng-click="changeMethod($index)">Change Method</button>
+                        <div ng-if="galileo.mode == 'threshold'">
+                            <button class="btn-default" data-toggle="modal" data-target="#myModal{{$index}}">
+                                Edit Threshold
+                            </button>
+                            <br/>
+                            <div class="modal fade" id="myModal{{$index}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                            <h4 class="modal-title" id="myModalLabel">Edit threshold</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div ng-repeat="(key, prop) in galileo.valves" ng-if="galileo.valves[key].enabled == true">
+                                                <h3 class="col-md-12">{{ key }}</h3>
+                                                <label class="col-md-12">schedule</label>
+                                                <input type="text" class="form-control" ng-model="galileo.valves[key].schedule" ng-change="galileos.$save(galileo)"/>
+                                                <div class="col-md-6" ng-repeat="(key2, prop2) in prop.threshold">
+                                                    <div ng-if="galileo.sensors[key2].enabled == true || key2 == 'light'">
+                                                        <label>{{key2}}</label>
+                                                        <input type="number" class="form-control" ng-model="galileo.valves[key].threshold[key2]" ng-change="galileos.$save(galileo)"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                            <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="galileos.$save(galileo)">Save changes</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

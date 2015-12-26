@@ -1,0 +1,42 @@
+<section class="menu-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="navbar-collapse collapse ">
+                    <ul id="menu-top" class="nav navbar-nav navbar-right">
+                        <li><a href="#/dashboard">Dashboard</a></li>
+                        <li><a href="#/status/{{idtaman}}">Status</a></li>
+                        <li><a href="#/rule/{{idtaman}}">Aturan Penyiraman</a></li>
+                        <li><a href="#/config/{{idtaman}}">Konfigurasi Sistem</a></li>
+                        <li><a class="menu-top-active" href="#/history/{{idtaman}}">Log Taman</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="content-wrapper">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h4 class="page-head-line">Log Penyiraman</h4>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="notice-board">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <ul ng-repeat="history in histories">
+                                <li>
+                                    <strong>{{$index + 1}}.</strong>   {{histories[histories.length - $index - 1].value}}<br/>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

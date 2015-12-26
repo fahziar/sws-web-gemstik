@@ -1,0 +1,103 @@
+<section class="menu-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="navbar-collapse collapse ">
+                    <ul id="menu-top" class="nav navbar-nav navbar-right">
+                        <li><a href="#/dashboard">Dashboard</a></li>
+                        <li><a class="menu-top-active" href="#/status/{{idtaman}}">Status</a></li>
+                        <li><a href="#/rule/{{idtaman}}">Aturan Penyiraman</a></li>
+                        <li><a href="#/config/{{idtaman}}">Konfigurasi Sistem</a></li>
+                        <li><a href="#/history/{{idtaman}}">Log Taman</a></li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<div class="content-wrapper">
+    <div class="container">
+        <div class="col-md-12">
+            <div class="page-header">
+                <h2>{{gardens[idtaman-1].name}}</h2>
+                <h4>{{gardens[idtaman-1].address}}</h4>
+            </div>
+        </div>
+    </div>
+    <div class="container" ng-repeat="galileo in galileos">
+        <div class="row">
+            <div class="col-md-12">
+                <h4 class="page-head-line">{{galileo.$id}}</h4>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Informasi Umum
+                    </div>
+                    <div class="panel-body">
+                        <p>Mode penyiraman : {{galileo.mode}}</p>
+                        <p ng-if="galileo.online == true">
+                            Status galileo  : online
+                        </p>
+                        <p ng-if="galileo.online == false">
+                            Status galileo  : offline
+                        </p>
+                        <div ng-if="galileo.mode == 'manual' && galileo.command.forceopen == true">
+                            <button class="btn btn-primary" ng-click="forceOpen($index)">Force Close</button>
+                        </div>
+                        <div ng-if="galileo.mode == 'manual' && galileo.command.forceopen == false">
+                            <button class="btn btn-primary" ng-click="forceOpen($index)">Force Open</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Informasi Sensor
+                    </div>
+                    <div class="panel-body">
+                        <strong>light</strong>
+                        <p>{{galileo.light}} dari 1023</p>
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-success" role="progressbar" ng-style="{'width': '{{galileo.light / 1023 * 100}}%'}"></div>
+                        </div>
+                        <div ng-repeat="(key, prop) in galileo.sensors" ng-if="prop.enabled == true">
+                            <strong>{{key}}</strong>
+                            <p>{{prop.value}} dari 1023</p>
+                            <div class="progress">
+                                <div class="progress-bar progress-bar-success" role="progressbar" ng-style="{'width': '{{prop.value / 1023 * 100}}%'}"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="notice-board">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Status Keran
+                        </div>
+                        <div class="panel-body">
+                            <ul ng-repeat="(key, prop) in galileo.valves" ng-if="prop.enabled == true">
+                                <li ng-if="prop.opened == true">
+                                    <strong>{{key}} :</strong> open <br/>
+                                </li>
+                                <li ng-if="prop.opened == false">
+                                    <strong>{{key}} :</strong> close <br/>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br/>
+    </div>
+</div>

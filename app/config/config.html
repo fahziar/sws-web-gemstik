@@ -1,0 +1,75 @@
+<section class="menu-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="navbar-collapse collapse ">
+                    <ul id="menu-top" class="nav navbar-nav navbar-right">
+                        <li><a href="#/dashboard">Dashboard</a></li>
+                        <li><a href="#/status/{{idtaman}}">Status</a></li>
+                        <li><a href="#/rule/{{idtaman}}">Aturan Penyiraman</a></li>
+                        <li><a class="menu-top-active" href="#/config/{{idtaman}}">Konfigurasi Sistem</a></li>
+                        <li><a href="#/history/{{idtaman}}">Log Taman</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="content-wrapper">
+    <div class="container" ng-repeat="galileo in galileos">
+        <div class="row">
+            <div class="col-md-12">
+                <h4 class="page-head-line">{{galileo.$id}}</h4>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="notice-board">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Sensor
+                        </div>
+                        <div class="panel-body">
+                            <ul ng-repeat="(key, prop) in galileo.sensors">
+                                <div ng-if="galileo.sensors[key].enabled == true">
+                                    <li>
+                                        <strong>{{ key }}</strong> <button class="btn btn-warning" ng-click="changeStatus(galileo.id, key)">Disable</button> <br/>
+                                    </li>
+                                </div>
+                                <div ng-if="galileo.sensors[key].enabled == false">
+                                    <li>
+                                        <strong>{{ key }}</strong> <button class="btn btn-primary" ng-click="changeStatus(galileo.id, key)">Enable</button> <br/>
+                                    </li>
+                                </div>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="notice-board">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Valve
+                        </div>
+                        <div class="panel-body">
+                            <ul ng-repeat="(key, prop) in galileo.valves">
+                                <div ng-if="galileo.valves[key].enabled == true">
+                                    <li>
+                                        <strong>{{ key }}</strong> <button class="btn btn-warning" ng-click="changeStatus2(galileo.id, key)">Disable</button> <br/>
+                                    </li>
+                                </div>
+                                <div ng-if="galileo.valves[key].enabled == false">
+                                    <li>
+                                        <strong>{{ key }}</strong> <button class="btn btn-primary" ng-click="changeStatus2(galileo.id, key)">Enable</button> <br/>
+                                    </li>
+                                </div>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
